@@ -36,7 +36,7 @@ public class ViewController
         // 1) Consuming the REST API result for providing a List<> instead of a single 'Contacts' object
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Contacts>> response = restTemplate.exchange(
-                "http://127.0.0.1:8080/contacts/rest/",
+                ContactsController.REST_SERVICE_URI,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Contacts>>() {});
