@@ -62,23 +62,27 @@ public class ViewController
 
     @RequestMapping(value = "/addcontact", method = RequestMethod.POST)
     public String addContact(@ModelAttribute(value = "contacts") Contacts contact){
-        // Here I tried directly calling the REST POST API
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Contacts> entity = new HttpEntity<>(contact, header);
-        //restTemplate.put("/contacts/rest",entity);
 
+        // If we don't set the Id, it will be null and resttemplate exchange won't work, as Entity is <Contacts>
+        contact.set_id(ObjectId.get());
+
+        HttpEntity<Contacts> entity = new HttpEntity<>(contact, header);
+        
         if(contact.getName() .isEmpty() || contact.getPhone().isEmpty())
             System.out.println("Contact not saved, fields can't be empty!");
         else
-            repository.save(contact);
+            //repository.save(contact);
+           // restTemplate.put(ContactsController.REST_SERVICE_URI, entity);
+            restTemplate.exchange(ContactsController.REST_SERVICE_URI, HttpMethod.POST, entity, Contacts.class);
         return "redirect:/contacts/";
     }
 
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public String deleteContact(@PathVariable("id") String id){
-        ///contacts/delete/{id}(id=${contact.id}"
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(ContactsController.REST_SERVICE_URI + "/" + id);
 
