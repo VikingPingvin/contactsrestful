@@ -95,7 +95,6 @@ public class ViewController
 
         Contacts contact = restTemplate.getForObject(ContactsController.REST_SERVICE_URI + "/" + id, Contacts.class, params);
         model.addAttribute("contact", contact);
-        System.out.println("EditContact GET: " + contact.toString());
         return "edit-contact";
     }
 
@@ -103,8 +102,8 @@ public class ViewController
     public String editContact(@PathVariable("id") String id,
                               @ModelAttribute("contact")Contacts contact){
 
-        System.out.println("EDIT POST METHOD -> Contact: " + contact.toString());
-        System.out.println("ID from path: " + id);
+        // I wasn't able to return the ObjectId as part of the Contacts modelattribute,
+        // so I needed to set it again for the new object
         contact.set_id(new ObjectId(id));
         RestTemplate restTemplate = new RestTemplate();
 
