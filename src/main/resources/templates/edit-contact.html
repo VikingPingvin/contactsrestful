@@ -11,20 +11,7 @@
         <h2> Add a new Contact </h2>
 
         <form action="#" th:action="@{/contacts/editContact/{id} (id=${contact._id})}" th:object="${contact}" method="post">
-            <div class="form-group">
-                <label for="nameInput">Name</label>
-                <input type="text" th:field="*{name}" class="form-control" id="nameInput">
-                <small id="nameHelp" class="form-text text-muted">Please type your full name here.</small>
-            </div>
-            <div class="form-group">
-                <label for="phoneInput"> Phone number</label>
-                <input type="text" th:field="*{phone}" class="form-control" id="phoneInput">
-            </div>
-            <div class="form-group">
-                <label for="emailInput">Email adress</label>
-                <input type="text" th:field="*{email}" class="form-control" id="emailInput">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div th:insert="contactFragment.html :: contactFrag"/>
         </form>
     </div>
 </div>
