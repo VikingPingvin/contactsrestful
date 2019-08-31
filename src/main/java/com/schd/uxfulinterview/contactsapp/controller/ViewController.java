@@ -12,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/contacts")
@@ -71,7 +69,7 @@ public class ViewController
         contact.set_id(ObjectId.get());
 
         HttpEntity<Contacts> entity = new HttpEntity<>(contact, header);
-        
+
         if(contact.getName() .isEmpty() || contact.getPhone().isEmpty())
             System.out.println("Contact not saved, fields can't be empty!");
         else
@@ -86,6 +84,31 @@ public class ViewController
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(ContactsController.REST_SERVICE_URI + "/" + id);
 
+        return "redirect:/contacts";
+    }
+
+    @RequestMapping(value = "editContact/{id}", method = RequestMethod.GET)
+    public String editContact(@PathVariable("id") String id, Model model){
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String, String> params = new HashMap<>();
+        params.put("_id", id);
+
+        Contacts contact = restTemplate.getForObject(ContactsController.REST_SERVICE_URI + "/" + id, Contacts.class, params);
+        model.addAttribute("contact", contact);
+        System.out.println("EditContact GET: " + contact.toString());
+        return "edit-contact";
+    }
+
+    @RequestMapping(value = "/editContact/{id}", method = RequestMethod.POST)
+    public String editContact(@PathVariable("id") String id,
+                              @ModelAttribute("contact")Contacts contact){
+
+        System.out.println("EDIT POST METHOD -> Contact: " + contact.toString());
+        System.out.println("ID from path: " + id);
+        contact.set_id(new ObjectId(id));
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.put(ContactsController.REST_SERVICE_URI + "/" + id, contact);
         return "redirect:/contacts";
     }
 }
