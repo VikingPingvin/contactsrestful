@@ -30,7 +30,7 @@
                     <td th:text="${contact.phone}"/>
                     <td th:text="${contact.email}"/>
                     <td><a href="@{/contacts/edit/ + ${contact.id}}" class = "btn btn-primary"/><i class="fas fa-user-edit ml-2"/></td>
-                    <td><a th:href="@{/contacts/delete/id=${contact.id}}" class = "btn btn-primary"/><i class="fas fa-user-edit ml-2"/></td>
+                    <td><a th:href="@{/contacts/delete/{id} (id=${contact._id})}" class = "btn btn-primary"/><i class="fas fa-user-edit ml-2"/></td>
                 </tr>
             </tbody>
         </table>
