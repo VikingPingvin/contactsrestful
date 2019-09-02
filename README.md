@@ -47,7 +47,16 @@ mvnw spring-boot:run
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+### Build with Maven
+
+```
+mvnw package
+```
+
+### Use Dockerfile with Dockerfile
+```
+$ docker build -t app .
+```
 
 ## Built With
 

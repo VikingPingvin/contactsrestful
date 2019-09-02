@@ -1,0 +1,7 @@
+# Alpine Linux with OpenJDK JRE
+FROM openjdk:8-jdk-alpine
+
+# copy JAR into image
+COPY target/contactsapp-0.0.1-SNAPSHOT app.jar
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
