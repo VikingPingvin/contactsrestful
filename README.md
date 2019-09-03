@@ -2,6 +2,8 @@
 
 An application that utilizes a RESTful API, MongoDB, and a simple Thymeleaf view frontend.
 
+![alt text](https://i.imgur.com/9SY6jrJ.png)
+
 ## Getting Started
 
 ### Setting up the Database
